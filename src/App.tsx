@@ -57,7 +57,10 @@ function App() {
       const receipt = await tx.wait()
       if (action === 'purchase') setOwned((current) => [...new Set([...current, prompt.id])])
       setTransaction({ status: 'success', message: action === 'purchase' ? 'Prompt collected. Access unlocked.' : 'Tip sent directly to the creator.', hash: receipt.hash })
-    } catch { setTransaction({ status: 'error', message: 'Transaction cancelled or rejected by the network' }) }
+    } catch (error) {
+      const details = getTransactionError(error)
+      setTransaction({ status: 'error', message: details || 'Transaction cancelled or rejected by the network' })
+    }
   }
 
   const openPrompt = (id: number) => { window.location.hash = `prompt/${id}`; setMobileOpen(false) }
@@ -96,5 +99,13 @@ function TransactionNotice({ transaction }: { transaction: TransactionState }) {
 }
 
 function getPromptIdFromHash() { const match = window.location.hash.match(/^#prompt\/(\d+)$/); return match ? Number(match[1]) : null }
+
+function getTransactionError(error: unknown) {
+  const candidate = error as { shortMessage?: string; reason?: string; code?: string }
+  if (candidate.code === 'ACTION_REJECTED') return 'Transaction rejected in wallet'
+  if (candidate.reason) return `Transaction reverted: ${candidate.reason}`
+  if (candidate.shortMessage) return candidate.shortMessage
+  return ''
+}
 
 export default App

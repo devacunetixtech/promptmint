@@ -33,6 +33,13 @@ describe('PromptMint', function () {
       .to.emit(promptMint, 'CreatorTipped').withArgs(1, buyer.address, ethers.parseEther('0.02'))
   })
 
+  it('allows the creator to collect their own prompt for access', async function () {
+    const { promptMint, creator } = await deployFixture()
+    await promptMint.connect(creator).registerPrompt('ipfs://metadata', ethers.parseEther('0.08'))
+    await promptMint.connect(creator).purchasePrompt(1, { value: ethers.parseEther('0.08') })
+    expect(await promptMint.hasAccess(1, creator.address)).to.equal(true)
+  })
+
   it('rejects purchases with an incorrect price', async function () {
     const { promptMint, creator, buyer } = await deployFixture()
     await promptMint.connect(creator).registerPrompt('ipfs://metadata', ethers.parseEther('0.08'))

@@ -28,7 +28,6 @@ contract PromptMint {
         Prompt memory prompt = prompts[promptId];
         require(prompt.active, "prompt unavailable");
         require(msg.value == prompt.price, "incorrect price");
-        require(msg.sender != prompt.creator, "creator cannot purchase");
         hasAccess[promptId][msg.sender] = true;
         (bool paid, ) = payable(prompt.creator).call{value: msg.value}("");
         require(paid, "payout failed");

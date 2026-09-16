@@ -40,8 +40,8 @@ npm run deploy:testnet
 3. Copy the printed address into `VITE_PROMPTMINT_CONTRACT_ADDRESS`.
 4. Restart the Vite server.
 
-Current BOT Chain testnet deployment: `0xBE2fa5CF5EcBD3F64C39F43B148EDecd4036536b`.
-Verified source: https://scan.bohr.life/address/0xBE2fa5CF5EcBD3F64C39F43B148EDecd4036536b#code
+Current BOT Chain testnet deployment: `0xCA5309a43410F1761ad78f57d4c65F4202e20Ea3`.
+Verified source: https://scan.bohr.life/address/0xCA5309a43410F1761ad78f57d4c65F4202e20Ea3#code
 
 To register the four included listings on a fresh deployment, run `npm run seed:testnet`. The script is idempotent and only uses metadata references; private prompt text stays off-chain.
 
