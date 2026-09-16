@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { ArrowLeft, ArrowUpRight, Check, ChevronRight, Heart, Menu, Search, Sparkles, Wallet, X } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, Check, ChevronRight, Heart, LogOut, Menu, Search, Sparkles, Wallet, X } from 'lucide-react'
 import { BrowserProvider, Contract, parseEther } from 'ethers'
 
 type Prompt = { id: number; title: string; description: string; category: string; price: string; creator: string; creatorName: string; initials: string; accent: string; preview: string; content: string }
@@ -44,6 +44,13 @@ function App() {
     } catch { setToast('Connect a wallet on BOT Chain testnet'); return '' }
   }
 
+  const disconnectWallet = () => {
+    setWallet('')
+    setOwned([])
+    setTransaction({ status: 'idle', message: '' })
+    setToast('Wallet disconnected from PromptMint')
+  }
+
   const sendTransaction = async (prompt: Prompt, action: 'purchase' | 'tip', amount: string) => {
     const account = wallet || await connectWallet()
     if (!account || !window.ethereum) return
@@ -67,7 +74,7 @@ function App() {
   const closePrompt = () => { window.location.hash = ''; setTransaction({ status: 'idle', message: '' }) }
 
   return <div className="app-shell">
-    <header className="topbar"><a className="brand" href="#" onClick={() => { closePrompt(); setMobileOpen(false) }}><span className="brand-mark"><Sparkles size={16} /></span><span>prompt<span className="brand-accent">mint</span></span></a><nav className={mobileOpen ? 'nav-links is-open' : 'nav-links'}><a href="#discover" onClick={() => { closePrompt(); setMobileOpen(false) }}>Discover</a><a href="#how-it-works" onClick={() => { closePrompt(); setMobileOpen(false) }}>How it works</a></nav><div className="top-actions"><button className="icon-button mobile-menu" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">{mobileOpen ? <X size={20} /> : <Menu size={20} />}</button><button className="wallet-button" onClick={() => void connectWallet()}><Wallet size={16} />{wallet ? `${wallet.slice(0, 6)}...${wallet.slice(-4)}` : 'Connect wallet'}</button></div></header>
+    <header className="topbar"><a className="brand" href="#" onClick={() => { closePrompt(); setMobileOpen(false) }}><span className="brand-mark"><Sparkles size={16} /></span><span>prompt<span className="brand-accent">mint</span></span></a><nav className={mobileOpen ? 'nav-links is-open' : 'nav-links'}><a href="#discover" onClick={() => { closePrompt(); setMobileOpen(false) }}>Discover</a><a href="#how-it-works" onClick={() => { closePrompt(); setMobileOpen(false) }}>How it works</a></nav><div className="top-actions"><button className="icon-button mobile-menu" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">{mobileOpen ? <X size={20} /> : <Menu size={20} />}</button>{wallet ? <><button className="wallet-button" onClick={() => void connectWallet()}><Wallet size={16} />{`${wallet.slice(0, 6)}...${wallet.slice(-4)}`}</button><button className="disconnect-button" onClick={disconnectWallet} title="Disconnect wallet"><LogOut size={15} /><span>Disconnect</span></button></> : <button className="wallet-button" onClick={() => void connectWallet()}><Wallet size={16} />Connect wallet</button>}</div></header>
     {selectedPrompt ? <PromptPage prompt={selectedPrompt} owned={owned.includes(selectedPrompt.id)} transaction={transaction} onBack={closePrompt} onCollect={() => void sendTransaction(selectedPrompt, 'purchase', selectedPrompt.price)} onTip={(amount) => void sendTransaction(selectedPrompt, 'tip', amount)} /> : <LandingPage onOpenPrompt={openPrompt} />}
     <footer><a className="brand" href="#" onClick={closePrompt}><span className="brand-mark"><Sparkles size={15} /></span><span>prompt<span className="brand-accent">mint</span></span></a><span>Own the prompts that power your agents.</span><span>BOT Chain testnet · <a href="https://scan.bohr.life" target="_blank" rel="noreferrer">Explorer ↗</a></span></footer>
     {toast && <button className="toast" onClick={() => setToast('')}><X size={14} /> {toast}</button>}
