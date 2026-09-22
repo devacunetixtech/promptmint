@@ -5,4 +5,5 @@ dist
 cache
 artifacts
 broadcast
+.interaction-wallets.json
 Acunetix BOTChain Integration Guide.md

@@ -1,4 +1,5 @@
 require('@nomicfoundation/hardhat-toolbox')
+require('dotenv').config()
 
 const deployerKey = process.env.PRIVATE_KEY || process.env.DEPLOYER_PRIVATE_KEY
 const accounts = deployerKey ? [deployerKey] : []
@@ -28,6 +29,7 @@ module.exports = {
   etherscan: {
     apiKey: {
       botchainTestnet: process.env.BLOCKSCOUT_API_KEY || '',
+      botchainMainnet: process.env.BLOCKSCOUT_API_KEY || '',
     },
     customChains: [
       {
@@ -36,6 +38,14 @@ module.exports = {
         urls: {
           apiURL: 'https://scan.bohr.life/api',
           browserURL: 'https://scan.bohr.life',
+        },
+      },
+      {
+        network: 'botchainMainnet',
+        chainId: 677,
+        urls: {
+          apiURL: 'https://scan.botchain.ai/api',
+          browserURL: 'https://scan.botchain.ai',
         },
       },
     ],

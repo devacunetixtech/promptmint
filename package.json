@@ -11,7 +11,11 @@
     "hardhat:test": "hardhat test",
     "deploy:testnet": "hardhat run scripts/deploy.cjs --network botchainTestnet",
     "seed:testnet": "hardhat run scripts/seed.cjs --network botchainTestnet",
-    "verify:testnet": "hardhat verify --network botchainTestnet"
+    "verify:testnet": "hardhat verify --network botchainTestnet",
+    "deploy:mainnet": "hardhat run scripts/deploy.cjs --network botchainMainnet",
+    "seed:mainnet": "hardhat run scripts/seed.cjs --network botchainMainnet",
+    "verify:mainnet": "hardhat verify --network botchainMainnet",
+    "interact:mainnet": "hardhat run scripts/interact-wallets.cjs --network botchainMainnet"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",
@@ -25,6 +29,7 @@
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
+    "dotenv": "^16.6.1",
     "hardhat": "^2.22.19",
     "typescript": "^5.7.2"
   }

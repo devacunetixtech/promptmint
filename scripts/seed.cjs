@@ -18,8 +18,8 @@ async function main() {
   }
   for (const [metadataURI, price] of listings.slice(currentCount)) {
     const tx = await promptMint.registerPrompt(metadataURI, hre.ethers.parseEther(price))
-    await tx.wait()
-    console.log(`Registered ${metadataURI} at ${price} BOT`)
+    const receipt = await tx.wait()
+    console.log(`Registered ${metadataURI} at ${price} BOT: ${receipt.hash}`)
   }
 }
 
