@@ -7,7 +7,7 @@ PromptMint is an on-chain marketplace for reusable AI prompts. Creators publish 
 - React, TypeScript, Vite, ethers.js
 - Solidity 0.8.24
 - Hardhat 2 with Chai and the Hardhat toolbox
-- BOT Chain testnet: chain ID `968`, RPC `https://rpc.bohr.life`
+- BOT Chain mainnet: chain ID `677`, RPC `https://rpc.botchain.ai`
 
 ## Run the app
 
@@ -28,24 +28,26 @@ npm run hardhat:test
 
 Tests cover prompt registration, creator ownership, purchases, payout events, tipping, and invalid purchase prices.
 
-## Deploy to BOT Chain testnet
+## BOT Chain mainnet deployment
 
 1. Put a funded deployer key in `.env` as `DEPLOYER_PRIVATE_KEY`.
 2. Run:
 
 ```bash
-npm run deploy:testnet
+npm run deploy:mainnet
 ```
 
 3. Copy the printed address into `VITE_PROMPTMINT_CONTRACT_ADDRESS`.
 4. Restart the Vite server.
 
-Current BOT Chain testnet deployment: `0xCA5309a43410F1761ad78f57d4c65F4202e20Ea3`.
-Verified source: https://scan.bohr.life/address/0xCA5309a43410F1761ad78f57d4c65F4202e20Ea3#code
+Current BOT Chain mainnet deployment: `0x03f928c192205911a25FDf137cBdf251f0f74765`.
+Verified source: https://scan.botchain.ai/address/0x03f928c192205911a25FDf137cBdf251f0f74765#code
 
-To register the four included listings on a fresh deployment, run `npm run seed:testnet`. The script is idempotent and only uses metadata references; private prompt text stays off-chain.
+To register the four included listings on a fresh deployment, run `npm run seed:mainnet`. The script is idempotent and only uses metadata references; private prompt text stays off-chain.
 
-For verification, use the BOT Chain explorer at `https://scan.bohr.life`. Mainnet configuration is available as the `botchainMainnet` Hardhat network with chain ID `677`.
+Verify a deployment with `npm run verify:mainnet -- <contract-address>`. The mainnet explorer is `https://scan.botchain.ai`.
+
+The five generated interaction wallets are kept in the git-ignored `.interaction-wallets.json` with file mode `0600`. Run `npm run interact:mainnet` to fund each wallet only for gas and send a 1-wei tip interaction.
 
 ## Data model
 
