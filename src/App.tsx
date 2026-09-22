@@ -12,10 +12,10 @@ const prompts: Prompt[] = [
   { id: 4, title: 'Brand Voice Kit', description: 'Build a distinct, consistent voice from a handful of examples and a point of view.', category: 'Creative', price: '0.03', creator: '0xA4...e848', creatorName: 'PromptMint Studio', initials: 'PM', accent: 'mint', preview: 'A recognizable voice is a decision made repeatedly.', content: 'You are a brand voice editor. Infer the point of view, rhythm, vocabulary, and emotional temperature from the examples. Return a concise voice guide, five do and do not pairs, and a rewrite in the established voice.' },
 ]
 const categories = ['All prompts', 'Strategy', 'Education', 'Research', 'Creative']
-const contractAddress = import.meta.env.VITE_PROMPTMINT_CONTRACT_ADDRESS
+const contractAddress = '0x03f928c192205911a25FDf137cBdf251f0f74765'
 const contractAbi = ['function purchasePrompt(uint256 promptId) external payable', 'function tipCreator(uint256 promptId) external payable']
-const explorerUrl = import.meta.env.VITE_BOTCHAIN_MAINNET_EXPLORER || 'https://scan.botchain.ai'
-const mainnet = { chainId: '0x2a5', chainName: 'BOT Chain', rpcUrls: [import.meta.env.VITE_BOTCHAIN_MAINNET_RPC || 'https://rpc.botchain.ai'], nativeCurrency: { name: 'BOT', symbol: 'BOT', decimals: 18 }, blockExplorerUrls: [explorerUrl] }
+const explorerUrl = 'https://scan.botchain.ai'
+const mainnet = { chainId: '0x2a5', chainName: 'BOT Chain', rpcUrls: ['https://rpc.botchain.ai'], nativeCurrency: { name: 'BOT', symbol: 'BOT', decimals: 18 }, blockExplorerUrls: [explorerUrl] }
 declare global { interface Window { ethereum?: { request: (args: { method: string; params?: unknown[] }) => Promise<unknown> } } }
 
 function App() {
